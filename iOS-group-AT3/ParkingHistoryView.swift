@@ -7,48 +7,85 @@
 
 import SwiftUI
 
-
-struct ParkingRecord: Identifiable {
-    let id = UUID()
+struct ParkingRecord: Identifiable, Codable {
+    let id: String
     let locationName: String
     let date: Date
-    let imageName: String // need to put on Assets.xcassets
+    let count: Int
+    let imageName: String
+    let latitude: Double
+    let longitude: Double
 }
 
-
 struct ParkingHistoryView: View {
-    // example
-    @State private var records: [ParkingRecord] = [
-        ParkingRecord(locationName: "Broadway UTS Parking", date: Date(), imageName: "uts1"),
-        ParkingRecord(locationName: "Jones St Parking", date: Date().addingTimeInterval(-86400), imageName: "uts2"),
-        ParkingRecord(locationName: "Ultimo TAFE Parking", date: Date().addingTimeInterval(-172800), imageName: "uts3")
-    ]
-    
+    @State private var records: [ParkingRecord] = []
+    @State private var sortByMostVisited = false
+
+    var sortedRecords: [ParkingRecord] {
+        sortByMostVisited
+            ? records.sorted { $0.count > $1.count }
+            : records.sorted { $0.date > $1.date }
+    }
+
     var body: some View {
         NavigationView {
-            List {
-                ForEach(records) { record in
+            VStack {
+                Picker("Sort By", selection: $sortByMostVisited) {
+                    Text("Latest").tag(false)
+                    Text("Most Visited").tag(true)
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal)
+
+                List(sortedRecords) { record in
                     HStack(spacing: 16) {
                         Image(record.imageName)
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 70, height: 70)
+                            .frame(width: 60, height: 60)
+                            .cornerRadius(8)
                             .clipped()
-                            .cornerRadius(10)
 
                         VStack(alignment: .leading) {
                             Text(record.locationName)
                                 .font(.headline)
-                            Text(record.date.formatted(date: .abbreviated, time: .shortened))
-                                .font(.subheadline)
+                            Text("Visited \(record.count)x")
+                                .font(.caption)
                                 .foregroundColor(.gray)
+                            Text(record.date.formatted(date: .abbreviated, time: .shortened))
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
                         }
                     }
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 6)
                 }
             }
             .navigationTitle("Parking History")
+            .onAppear {
+                loadJSONData()
+            }
         }
     }
+
+
+    func loadJSONData() {
+        guard let url = Bundle.main.url(forResource: "parking_history", withExtension: "json") else {
+            print("❌ parking_history.json not found")
+            return
+        }
+
+        do {
+            let data = try Data(contentsOf: url)
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            self.records = try decoder.decode([ParkingRecord].self, from: data)
+        } catch {
+            print("❌ Failed to decode parking_history.json: \(error)")
+        }
+    }
+}
+
+#Preview {
+    ParkingHistoryView()
 }
 
