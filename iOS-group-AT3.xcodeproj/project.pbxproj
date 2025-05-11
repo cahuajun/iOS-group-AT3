@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		706CF2DF2DD111F20084ECCE /* notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 706CF2DE2DD111EE0084ECCE /* notes.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		FFC5565E2DCB4556003D3B6F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		706CF2DE2DD111EE0084ECCE /* notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = notes.md; sourceTree = "<group>"; };
 		FFC5564C2DCB4554003D3B6F /* iOS-group-AT3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-group-AT3.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFC5565D2DCB4556003D3B6F /* iOS-group-AT3Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS-group-AT3Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFC556672DCB4556003D3B6F /* iOS-group-AT3UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS-group-AT3UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,6 +80,7 @@
 		FFC556432DCB4554003D3B6F = {
 			isa = PBXGroup;
 			children = (
+				706CF2DE2DD111EE0084ECCE /* notes.md */,
 				FFC5564E2DCB4554003D3B6F /* iOS-group-AT3 */,
 				FFC556602DCB4556003D3B6F /* iOS-group-AT3Tests */,
 				FFC5566A2DCB4556003D3B6F /* iOS-group-AT3UITests */,
@@ -212,6 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				706CF2DF2DD111F20084ECCE /* notes.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
