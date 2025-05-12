@@ -15,11 +15,4 @@ struct ParkingSpot: Identifiable {
     let rating: Double
     let comments: [Comment]
 }
- 
-struct Comment: Identifiable {
-    let id = UUID()
-    let username: String
-    let content: String
-    let rating: Int
-    let date: Date
-}
+
