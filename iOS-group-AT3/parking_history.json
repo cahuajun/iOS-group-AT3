@@ -4,7 +4,7 @@
     "locationName": "Mary Ann Street 1",
     "date": "2024-05-12T08:00:00Z",
     "count": 1,
-    "imageName": "mary_ann_1",
+    "imageName": "image1",
     "latitude": -33.881278,
     "longitude": 151.199083
   },
@@ -13,7 +13,7 @@
     "locationName": "Mary Ann Street 2",
     "date": "2024-05-11T10:30:00Z",
     "count": 2,
-    "imageName": "mary_ann_2",
+    "imageName": "image2",
     "latitude": -33.881139,
     "longitude": 151.199611
   },
@@ -22,7 +22,7 @@
     "locationName": "Thomas Street 1",
     "date": "2024-05-10T17:20:00Z",
     "count": 1,
-    "imageName": "thomas_1",
+    "imageName": "image3",
     "latitude": -33.882889,
     "longitude": 151.199611
   },
@@ -31,7 +31,7 @@
     "locationName": "Thomas Street 2",
     "date": "2024-05-09T14:15:00Z",
     "count": 3,
-    "imageName": "thomas_2",
+    "imageName": "image1",
     "latitude": -33.883278,
     "longitude": 151.198694
   },
@@ -40,7 +40,7 @@
     "locationName": "Wattle Street 1",
     "date": "2024-05-08T11:00:00Z",
     "count": 1,
-    "imageName": "wattle_1",
+    "imageName": "image2",
     "latitude": -33.882083,
     "longitude": 151.197528
   },
@@ -49,7 +49,7 @@
     "locationName": "Blackfriars Pi 1",
     "date": "2024-05-07T15:45:00Z",
     "count": 2,
-    "imageName": "blackfriars_1",
+    "imageName": "image3",
     "latitude": -33.885639,
     "longitude": 151.198083
   }
