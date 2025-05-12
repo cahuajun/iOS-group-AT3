@@ -22,12 +22,6 @@ struct ContentView: View {
     
     var body: some View {
         ZStack{
-            
-//            Map(position: $startPosition, selection: $selection){
-//                ForEach(allSpots){ spot in
-//                    Marker(item: MKMapItem() ).mapItemDetailSelectionAccessory(.callout).tag(MapSelection(spot))
-//                }.mapItemDetailSelectionAccessory(.callout)
-//            }.frame(width: 400, height: 300)
             Map(selection: $selection) {
                 ForEach(allSpots) { spot in
                     Marker(spot.name, coordinate: CLLocationCoordinate2D(latitude: spot.lat, longitude: spot.long))
