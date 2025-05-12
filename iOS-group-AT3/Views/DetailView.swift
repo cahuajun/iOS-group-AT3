@@ -6,6 +6,7 @@
 //
  
 import SwiftUI
+import MapKit
  
 struct DetailView: View {
     let parkingSpot: ParkingSpot
@@ -90,6 +91,8 @@ struct DetailView: View {
         description: "Description",
         imageURL: "https://example.com/parking.jpg",
         rating: 4.5,
+        lat: 51.507222,
+        long: -0.1275,
         comments: []
     ))
 }

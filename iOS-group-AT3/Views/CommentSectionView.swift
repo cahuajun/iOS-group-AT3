@@ -8,14 +8,18 @@ import UIKit
 import SwiftUI
 import PhotosUI
 
-struct Reply: Identifiable {
+struct Reply: Identifiable, Hashable {
     let id = UUID()
     let author: String
     let text: String
     let timestamp: Date
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
 
-struct Comment: Identifiable {
+struct Comment: Identifiable, Hashable {
     let id = UUID()
     let author: String
     let text: String
@@ -24,7 +28,11 @@ struct Comment: Identifiable {
     let image: UIImage?
     let isCurrentUser: Bool
     var likes: Int = 0
-    var replies: [Reply] = [] 
+    var replies: [Reply] = []
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
 
 struct CommentSectionView: View {

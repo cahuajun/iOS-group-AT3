@@ -6,13 +6,17 @@
 //
 
 import Foundation
+import MapKit
  
-struct ParkingSpot: Identifiable {
+struct ParkingSpot: Identifiable, Hashable {
     let id = UUID()
     let name: String
     let description: String
     let imageURL: String
     let rating: Double
+    let lat: Double
+    let long: Double
     let comments: [Comment]
+    
 }
 
