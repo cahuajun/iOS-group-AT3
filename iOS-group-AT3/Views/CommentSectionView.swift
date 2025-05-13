@@ -27,7 +27,7 @@ struct CommentSectionView: View {
         NavigationView {
             VStack(spacing: 0) {
                 
-                // 🔹 Header
+                //  Header
                 HStack {
                     Button(action: { dismiss() }) {
                         Label("Back", systemImage: "chevron.left")
@@ -36,7 +36,7 @@ struct CommentSectionView: View {
                 }
                 .padding()
                 
-                // 🔹 Title
+                //  Title
                 Text("Comments for \(parkingSpotID)")
                     .font(.title2).bold()
                 Text("⭐️ Average Rating: \(String(format: "%.1f", averageRating))")
@@ -68,7 +68,7 @@ struct CommentSectionView: View {
                     .padding(.horizontal)
                 }
                 
-                // 🔹 Input Area
+                //  Input Area
                 VStack(spacing: 10) {
                     HStack {
                         Text("Rate:")
@@ -136,16 +136,18 @@ struct CommentSectionView: View {
     func loadComments(for spotID: String) {
         guard let url = Bundle.main.url(forResource: "comments", withExtension: "json"),
               let data = try? Data(contentsOf: url) else {
-            print("❌ comments.json not found")
+            print("comments.json not found")
             return
         }
         
         do {
-            let decoded = try JSONDecoder().decode([String: [Comment]].self, from: data)
-            comments = decoded[spotID] ?? []
-            print("✅ Loaded \(comments.count) comment(s) for: \(spotID)")
-        } catch {
-            print("❌ Failed to decode comments.json: \(error)")
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .iso8601
+                let decoded = try decoder.decode([String: [Comment]].self, from: data)
+                comments = decoded[spotID] ?? []
+                print("Loaded \(comments.count) comment(s) for: \(spotID)")
+            } catch {
+                print("Failed to decode comments.json: \(error)")
         }
     }
     
