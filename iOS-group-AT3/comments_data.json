@@ -1,0 +1,37 @@
+
+{
+  "T1": [
+    {
+      "author": "Alice",
+      "text": "Very convenient and easy to find.",
+      "rating": 5,
+      "timestamp": "2024-05-12T10:00:00Z",
+      "likes": 3
+    },
+    {
+      "author": "John",
+      "text": "Close to UTS, but a bit narrow for SUVs.",
+      "rating": 4,
+      "timestamp": "2024-05-11T09:30:00Z",
+      "likes": 1
+    }
+  ],
+  "M1": [
+    {
+      "author": "Emily",
+      "text": "Quiet and safe at night. Loved it.",
+      "rating": 5,
+      "timestamp": "2024-05-10T19:45:00Z",
+      "likes": 2
+    }
+  ],
+  "B1": [
+    {
+      "author": "Dave",
+      "text": "Had trouble parking, space was tight.",
+      "rating": 3,
+      "timestamp": "2024-05-09T08:20:00Z",
+      "likes": 0
+    }
+  ]
+}
