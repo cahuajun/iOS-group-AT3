@@ -7,21 +7,11 @@
 
 import SwiftUI
 
-struct ParkingRecord: Identifiable, Codable {
-    let id: String
-    let locationName: String
-    let date: Date
-    let count: Int
-    let imageName: String
-    let latitude: Double
-    let longitude: Double
-}
-
 struct ParkingHistoryView: View {
-    @State private var records: [ParkingRecord] = []
+    @State private var records: [ParkingSpot] = []
     @State private var sortByMostVisited = false
 
-    var sortedRecords: [ParkingRecord] {
+    var sortedRecords: [ParkingSpot] {
         sortByMostVisited
             ? records.sorted { $0.count > $1.count }
             : records.sorted { $0.date > $1.date }
@@ -47,7 +37,7 @@ struct ParkingHistoryView: View {
                             .clipped()
 
                         VStack(alignment: .leading) {
-                            Text(record.locationName)
+                            Text(record.name)
                                 .font(.headline)
                             Text("Visited \(record.count)x")
                                 .font(.caption)
@@ -67,7 +57,6 @@ struct ParkingHistoryView: View {
         }
     }
 
-
     func loadJSONData() {
         guard let url = Bundle.main.url(forResource: "parking_history", withExtension: "json") else {
             print("❌ parking_history.json not found")
@@ -78,7 +67,7 @@ struct ParkingHistoryView: View {
             let data = try Data(contentsOf: url)
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
-            self.records = try decoder.decode([ParkingRecord].self, from: data)
+            self.records = try decoder.decode([ParkingSpot].self, from: data)
         } catch {
             print("❌ Failed to decode parking_history.json: \(error)")
         }

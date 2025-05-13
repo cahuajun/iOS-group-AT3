@@ -7,16 +7,16 @@
 
 import Foundation
 import MapKit
- 
-struct ParkingSpot: Identifiable, Hashable {
-    let id = UUID()
+
+struct ParkingSpot: Identifiable, Codable, Hashable {
+    let id: String
     let name: String
     let description: String
-    let imageURL: String
+    let imageName: String
     let rating: Double
     let lat: Double
     let long: Double
-    let comments: [Comment]
-    
+    let count: Int
+    let date: Date
 }
 

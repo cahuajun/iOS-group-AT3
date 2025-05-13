@@ -1,58 +1,69 @@
 [
   {
     "id": "T1",
-    "locationName": "Thomas Street 1",
-    "date": "2024-05-14T10:00:00Z",
-    "count": 5,
+    "name": "Thomas Street 1",
+    "description": "No description available.",
     "imageName": "image1",
-    "latitude": -33.882889,
-    "longitude": 151.199611
+    "rating": 4.5,
+    "lat": -33.882889,
+    "long": 151.199611,
+    "count": 5,
+    "date": "2024-05-14T10:00:00Z"
   },
   {
     "id": "M1",
-    "locationName": "Mary Ann Street 1",
-    "date": "2024-05-13T08:30:00Z",
-    "count": 2,
+    "name": "Mary Ann Street 1",
+    "description": "No description available.",
     "imageName": "image2",
-    "latitude": -33.881278,
-    "longitude": 151.199083
+    "rating": 4.0,
+    "lat": -33.881278,
+    "long": 151.199083,
+    "count": 2,
+    "date": "2024-05-13T08:30:00Z"
   },
   {
     "id": "B1",
-    "locationName": "Blackfriars Pi 1",
-    "date": "2024-05-12T12:45:00Z",
-    "count": 1,
+    "name": "Blackfriars Pi 1",
+    "description": "No description available.",
     "imageName": "image3",
-    "latitude": -33.885639,
-    "longitude": 151.198083
+    "rating": 3.5,
+    "lat": -33.885639,
+    "long": 151.198083,
+    "count": 1,
+    "date": "2024-05-12T12:45:00Z"
   },
   {
     "id": "W1",
-    "locationName": "Wattle Street 1",
-    "date": "2024-05-11T11:00:00Z",
-    "count": 2,
+    "name": "Wattle Street 1",
+    "description": "No description available.",
     "imageName": "image2",
-    "latitude": -33.882083,
-    "longitude": 151.197528
+    "rating": 4.2,
+    "lat": -33.882083,
+    "long": 151.197528,
+    "count": 2,
+    "date": "2024-05-11T11:00:00Z"
   },
   {
     "id": "T2",
-    "locationName": "Thomas Street 2",
-    "date": "2024-05-10T09:15:00Z",
-    "count": 1,
+    "name": "Thomas Street 2",
+    "description": "No description available.",
     "imageName": "image1",
-    "latitude": -33.883278,
-    "longitude": 151.198694
+    "rating": 4.0,
+    "lat": -33.883278,
+    "long": 151.198694,
+    "count": 1,
+    "date": "2024-05-10T09:15:00Z"
   },
   {
     "id": "M2",
-    "locationName": "Mary Ann Street 2",
-    "date": "2024-05-09T15:40:00Z",
-    "count": 1,
+    "name": "Mary Ann Street 2",
+    "description": "No description available.",
     "imageName": "image2",
-    "latitude": -33.881139,
-    "longitude": 151.199611
+    "rating": 3.8,
+    "lat": -33.881139,
+    "long": 151.199611,
+    "count": 1,
+    "date": "2024-05-09T15:40:00Z"
   }
 ]
-
 
