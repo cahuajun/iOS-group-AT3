@@ -52,7 +52,51 @@ struct DetailView: View {
                         Text(parkingSpot.description)
                             .padding(.horizontal)
                         
-                        // Comment view
+                        // Comments section
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                Text("Comments")
+                                    .font(.headline)
+                                Spacer()
+                                Button(action: {
+                                    showComments = true
+                                }) {
+                                    Text("View More")
+                                        .foregroundColor(.blue)
+                                }
+                            }
+                            .padding(.horizontal)
+                            
+                            if !parkingSpot.comments.isEmpty {
+                                ForEach(parkingSpot.comments.prefix(2)) { comment in
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        HStack {
+                                            Text(comment.author)
+                                                .font(.subheadline)
+                                                .bold()
+                                            Spacer()
+                                            HStack(spacing: 2) {
+                                                ForEach(1...5, id: \.self) { i in
+                                                    Image(systemName: i <= comment.rating ? "star.fill" : "star")
+                                                        .foregroundColor(.yellow)
+                                                        .font(.caption)
+                                                }
+                                            }
+                                        }
+                                        Text(comment.text)
+                                            .font(.subheadline)
+                                            .lineLimit(2)
+                                    }
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 4)
+                                }
+                            } else {
+                                Text("No comments yet")
+                                    .foregroundColor(.gray)
+                                    .padding(.horizontal)
+                            }
+                        }
+                        .padding(.vertical)
                     }
                 }
             }
@@ -77,7 +121,9 @@ struct DetailView: View {
                         }
                     }
             )
-            // TODO: Add comment sheet
+            .sheet(isPresented: $showComments) {
+                CommentSectionView(parkingSpotID: parkingSpot.id.uuidString)
+            }
         }
     }
 }
@@ -87,12 +133,15 @@ struct DetailView: View {
  
 #Preview {
     DetailView(parkingSpot: ParkingSpot(
-        name: "parkingspot1",
-        description: "Description",
-        imageURL: "https://example.com/parking.jpg",
+        name: "Thomas Street 1",
+        description: "Convenient parking spot near UTS campus. Easy access to public transport and shopping centers.",
+        imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF3xs3i2bH-q15i4WK6H8qd3F9MJfxoR6kgw&s",
         rating: 4.5,
-        lat: 51.507222,
-        long: -0.1275,
-        comments: []
+        lat: -33.882889,
+        long: 151.199611,
+        comments: [
+            Comment(author: "John", text: "Great spot! Always available during weekdays.", rating: 5, timestamp: Date(), image: nil, isCurrentUser: false, likes: 3),
+            Comment(author: "Sarah", text: "A bit expensive but very convenient location.", rating: 4, timestamp: Date(), image: nil, isCurrentUser: false, likes: 1)
+        ]
     ))
 }
