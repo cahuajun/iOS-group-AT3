@@ -128,8 +128,6 @@ struct DetailView: View {
     }
 }
  
-// TODO: Add commentRow view
-// TODO: Add commentsView
  
 #Preview {
     DetailView(parkingSpot: ParkingSpot(
