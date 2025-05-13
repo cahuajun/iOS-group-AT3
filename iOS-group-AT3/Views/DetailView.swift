@@ -134,14 +134,11 @@ struct DetailView: View {
 #Preview {
     DetailView(parkingSpot: ParkingSpot(
         name: "Thomas Street 1",
-        description: "Convenient parking spot near UTS campus. Easy access to public transport and shopping centers.",
+        description: "Description",
         imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF3xs3i2bH-q15i4WK6H8qd3F9MJfxoR6kgw&s",
         rating: 4.5,
         lat: -33.882889,
         long: 151.199611,
-        comments: [
-            Comment(author: "John", text: "Great spot! Always available during weekdays.", rating: 5, timestamp: Date(), image: nil, isCurrentUser: false, likes: 3),
-            Comment(author: "Sarah", text: "A bit expensive but very convenient location.", rating: 4, timestamp: Date(), image: nil, isCurrentUser: false, likes: 1)
-        ]
+        comments: []
     ))
 }
