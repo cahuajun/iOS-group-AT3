@@ -14,10 +14,18 @@ struct DetailView: View {
     @State private var isExpanded = false
     @State private var dragOffset: CGFloat = 0
     @State private var showComments = false
+    @State private var isParked = false
+    
+    // Calculate average rating from comments， maybe can add func to parkingSPot file to avoid DRY
+    private var averageRating: Double {
+        let total = parkingSpot.comments.reduce(0) { $0 + $1.rating }
+        return parkingSpot.comments.isEmpty ? 0.0 : Double(total) / Double(parkingSpot.comments.count)
+    }
     
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
+                // Top drag bar
                 RoundedRectangle(cornerRadius: 2.5)
                     .fill(Color.gray.opacity(0.5))
                     .frame(width: 40, height: 5)
@@ -25,17 +33,14 @@ struct DetailView: View {
                 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 16) {
-                        AsyncImage(url: URL(string: parkingSpot.imageURL)) { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                        } placeholder: {
-                            Rectangle()
-                                .fill(Color.gray.opacity(0.2))
-                        }
-                        .frame(height: 200)
-                        .clipped()
+                        // Parking spot image
+                        Image(parkingSpot.imageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(height: 200)
+                            .clipped()
                         
+                        // Name and rating
                         HStack {
                             Text(parkingSpot.name)
                                 .font(.title)
@@ -44,11 +49,33 @@ struct DetailView: View {
                             HStack {
                                 Image(systemName: "star.fill")
                                     .foregroundColor(.yellow)
-                                Text(String(format: "%.1f", parkingSpot.rating))
+                                Text(String(format: "%.1f", averageRating))
                             }
                         }
                         .padding(.horizontal)
                         
+                        // Park Here button
+                        Button(action: {
+                            isParked.toggle()
+                            // TODO: Update count in parking_history.json
+                            // 1. Read current JSON
+                            // 2. Find spot by id
+                            // 3. Increment count
+                            // 4. Save back to JSON
+                        }) {
+                            HStack {
+                                Image(systemName: isParked ? "checkmark.circle.fill" : "car.fill")
+                                Text(isParked ? "Parked" : "Park Here")
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(isParked ? Color.green : Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                        }
+                        .padding(.horizontal)
+                        
+                        // Description
                         Text(parkingSpot.description)
                             .padding(.horizontal)
                         
@@ -122,18 +149,47 @@ struct DetailView: View {
                     }
             )
             .sheet(isPresented: $showComments) {
-                CommentSectionView(parkingSpotID: parkingSpot.id.uuidString)
+                CommentSectionView(parkingSpotID: parkingSpot.id)
             }
         }
     }
 }
- 
- 
+
+/*
+ Notes for ContentView:
+
+    - Data Loading
+        - Load parking_history.json
+        - Parse to [ParkingSpot] array
+        - Get comments from comments.json
+        - Merge comments with spots
+
+    - Map View
+        - Show pins for each spot
+        - When pin tapped, show this DetailView
+        - Use sheet with .medium detent
+
+    - Files Needed
+        - parking_history.json (spot info)
+        - comments.json (comments)
+
+    - ParkingSpot Struct
+        - id, name, description
+        - imageName for spot image
+        - lat, long for map
+        - comments array
+
+    - Next Steps
+        - Load JSON in ContentView
+        - Connect map pins to DetailView
+        - Test data flow
+ */
 #Preview {
     DetailView(parkingSpot: ParkingSpot(
+        id: "T1",
         name: "Thomas Street 1",
-        description: "Description",
-        imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF3xs3i2bH-q15i4WK6H8qd3F9MJfxoR6kgw&s",
+        description: "No description available.",
+        imageName: "image1",
         rating: 4.5,
         lat: -33.882889,
         long: 151.199611,
