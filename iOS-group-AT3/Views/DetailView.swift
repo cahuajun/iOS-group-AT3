@@ -193,6 +193,8 @@ struct DetailView: View {
         rating: 4.5,
         lat: -33.882889,
         long: 151.199611,
+        count: 0,
+        date: Date(),
         comments: []
     ))
 }

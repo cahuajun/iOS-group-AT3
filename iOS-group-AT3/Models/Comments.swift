@@ -8,14 +8,14 @@ import Foundation
 import UIKit
 
 struct Reply: Identifiable, Hashable, Codable {
-    let id: UUID = UUID()
+    var id: UUID = UUID()
     let author: String
     let text: String
     let timestamp: Date
 }
 
 struct Comment: Identifiable, Hashable, Codable {
-    let id: UUID = UUID()
+    var id: UUID = UUID()
     let author: String
     let text: String
     let rating: Int

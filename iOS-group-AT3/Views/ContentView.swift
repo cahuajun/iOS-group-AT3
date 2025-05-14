@@ -11,18 +11,13 @@ import MapKit
 struct ContentView: View {
     @State private var isActive = false
     @State private var selectedLocation = CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275)
-    @State private var startPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275), span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)))
+    @State private var startPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: -33.882889, longitude: 151.199611), span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)))
     
     @State private var selection: ParkingSpot? = nil
-    @State private var allSpots = [
-        ParkingSpot(name: "Spot 1", description: "TestDesc1", imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF3xs3i2bH-q15i4WK6H8qd3F9MJfxoR6kgw&s", rating: 10.0, lat: 51.507222, long: -0.1275, comments: []),
-        ParkingSpot(name: "Spot 2", description: "TestDesc2", imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF3xs3i2bH-q15i4WK6H8qd3F9MJfxoR6kgw&s", rating: 10.0, lat: 51.537222, long: -0.1275, comments: []),
-        ParkingSpot(name: "Spot 3", description: "TestDesc3", imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF3xs3i2bH-q15i4WK6H8qd3F9MJfxoR6kgw&s", rating: 10.0, lat: 51.537222, long: -0.1475, comments: [])
-        ]
-    
+    @State var allSpots: [ParkingSpot]
     var body: some View {
         ZStack{
-            Map(selection: $selection) {
+            Map(initialPosition:  startPosition, interactionModes: .all, selection: $selection) {
                 ForEach(allSpots) { spot in
                     Marker(spot.name, coordinate: CLLocationCoordinate2D(latitude: spot.lat, longitude: spot.long))
                         .tag(spot)
@@ -33,13 +28,80 @@ struct ContentView: View {
                     DetailView(parkingSpot: spot)
                 }
                 .presentationDetents([.medium])
+            }.onAppear {
+                loadJSONData()
             }
             
+        }
+    }
+    func loadJSONData() {
+        guard let url = Bundle.main.url(forResource: "parking_history", withExtension: "json") else {
+            print("❌ parking_history.json not found")
+            return
+        }
+
+        do {
+            let data = try Data(contentsOf: url)
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            self.allSpots = try decoder.decode([ParkingSpot].self, from: data)
+        } catch {
+            print("❌ Failed to decode parking_history.json: \(error)")
         }
     }
 }
 
 
 #Preview {
-    ContentView()
+    ContentView(allSpots:
+                [ParkingSpot( id: "T1",
+                                 name: "Thomas Street 1",
+                                 description: "Two-storey parking lot",
+                                 imageName: "image1",
+                                 rating: 4.5,
+                                 lat: -33.882889,
+                                 long: 151.199611,
+                                 count: 5,
+                                 date: Date(),
+                                 comments:[]),
+                 ParkingSpot(
+                   id: "M1",
+                   name: "Mary Ann Street 1",
+                   description: "Near the UTS campus",
+                   imageName: "image2",
+                   rating: 4.0,
+                   lat: -33.881278,
+                   long: 151.199083,
+                   count: 2,
+                   date: Date(),
+                   comments:[]
+                 ),
+                 ParkingSpot(
+                   id: "B1",
+                   name: "Blackfriars Pi 1",
+                   description: "Solely for students",
+                   imageName: "image3",
+                   rating: 3.5,
+                   lat: -33.885639,
+                   long: 151.198083,
+                   count: 1,
+                   date: Date(),
+                   comments: []
+                 ),
+                 ParkingSpot(
+                   id: "W1",
+                   name: "Wattle Street 1",
+                   description: "Only two, sometimes depends on the lucky",
+                   imageName: "image2",
+                   rating: 4.2,
+                   lat: -33.882083,
+                   long: 151.197528,
+                   count: 2,
+                   date: Date(),
+                   comments:[]
+                 ),
+                
+                ]
+    
+    )
 }

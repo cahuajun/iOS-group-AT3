@@ -18,5 +18,6 @@ struct ParkingSpot: Identifiable, Codable, Hashable {
     let long: Double
     let count: Int
     let date: Date
+    var comments: [Comment]
 }
 
