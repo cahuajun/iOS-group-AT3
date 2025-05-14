@@ -15,23 +15,40 @@ struct ContentView: View {
     
     @State private var selection: ParkingSpot? = nil
     @State var allSpots: [ParkingSpot]
+    var showHistory: Bool = true
+    
     var body: some View {
-        ZStack{
-            Map(initialPosition:  startPosition, interactionModes: .all, selection: $selection) {
-                ForEach(allSpots) { spot in
-                    Marker(spot.name, coordinate: CLLocationCoordinate2D(latitude: spot.lat, longitude: spot.long))
-                        .tag(spot)
+        VStack{
+            NavigationStack{
+                NavigationLink {
+                    ParkingHistoryView()
+                } label: {
+                    HStack{
+                        Text("My Parking History")
+                        Image(systemName: "clock")
+                    }
                 }
-            }
-            .sheet(item: $selection) { spot in
-                NavigationStack {
-                    DetailView(parkingSpot: spot)
+                .buttonStyle(.borderedProminent)
+                .padding()
+                
+                ZStack{
+                    Map(initialPosition:  startPosition, interactionModes: .all, selection: $selection) {
+                        ForEach(allSpots) { spot in
+                            Marker(spot.name, coordinate: CLLocationCoordinate2D(latitude: spot.lat, longitude: spot.long))
+                                .tag(spot)
+                        }
+                    }
+                    .sheet(item: $selection) { spot in
+                        NavigationStack {
+                            DetailView(parkingSpot: spot)
+                        }
+                        .presentationDetents([.medium])
+                    }.onAppear {
+                        loadJSONData()
+                    }
                 }
-                .presentationDetents([.medium])
-            }.onAppear {
-                loadJSONData()
+                
             }
-            
         }
     }
 //    func loadJSONData() {
