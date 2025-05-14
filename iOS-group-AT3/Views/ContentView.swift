@@ -17,6 +17,23 @@ struct ContentView: View {
     @State private var startPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: -33.882889, longitude: 151.199611), span: MKCoordinateSpan(latitudeDelta: 0.008, longitudeDelta: 0.008)))
     
     /**
+        Keep track of the user's selected map style
+     */
+    @State private var selectedMapType: Int = 0
+    
+    var selectedMapStyle: MapStyle {
+        return switch(selectedMapType) {
+          case 1:
+                .hybrid
+          case 2:
+                .imagery
+          default:
+                .standard
+        }
+    }
+    
+    
+    /**
      Selection allows the correct details for the selected pin to be loaded in the detail view
      */
     @State private var selection: ParkingSpot? = nil
@@ -45,6 +62,16 @@ struct ContentView: View {
                 .buttonStyle(.borderedProminent)
                 .padding()
                 
+                /**
+                 Include picker for user's preferred mapstyle
+                 */
+                Picker("", selection: $selectedMapType) {
+                    Text("Default").tag(0)
+                    Text("Transit").tag(1)
+                    Text("Satellite").tag(2)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                
                 ZStack{
                     /**
                      A map of recorded parking spots
@@ -60,9 +87,12 @@ struct ContentView: View {
                         ForEach(allSpots) { spot in
                             Marker(spot.name,
                                    coordinate: CLLocationCoordinate2D(latitude: spot.lat, longitude: spot.long))
-                                .tag(spot)
+                            .tag(spot)
+                            .tint(.red)
+                            
                         }
                     }
+                    .pickerStyle(SegmentedPickerStyle())
                     .sheet(item: $selection) { spot in
                         /**
                          This sheet slides up from the bottom of the screen to show the details of the selected parking spot
@@ -75,6 +105,7 @@ struct ContentView: View {
                          Details view can be dismissed by clicking on the map
                          */
                         .presentationDetents([.medium])
+                        
                     }
                     .onAppear {
                         /**
@@ -83,6 +114,7 @@ struct ContentView: View {
                          */
                         allSpots = Utility.loadParkingSpots()
                     }
+                    .mapStyle(selectedMapStyle)
                 }
             }
         }

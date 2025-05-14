@@ -5,8 +5,8 @@
     "description": "Two-storey parking lot",
     "imageName": "image1",
     "rating": 4.5,
-    "lat": -33.882889,
-    "long": 151.199611,
+    "lat": -33.882511,
+    "long": 151.200581,
     "count": 5,
     "date": "2024-05-14T10:00:00Z",
     "comments": []
@@ -65,8 +65,8 @@
     "description": "You can always find a spot",
     "imageName": "image2",
     "rating": 3.8,
-    "lat": -33.881139,
-    "long": 151.199611,
+    "lat": -33.880523,
+    "long": 151.200940,
     "count": 1,
     "date": "2024-05-09T15:40:00Z",
     "comments": []
