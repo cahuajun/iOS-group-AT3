@@ -2,7 +2,7 @@
   {
     "id": "T1",
     "name": "Thomas Street 1",
-    "description": "No description available.",
+    "description": "Two-storey parking lot",
     "imageName": "image1",
     "rating": 4.5,
     "lat": -33.882889,
@@ -13,7 +13,7 @@
   {
     "id": "M1",
     "name": "Mary Ann Street 1",
-    "description": "No description available.",
+    "description": "Near the UTS campus",
     "imageName": "image2",
     "rating": 4.0,
     "lat": -33.881278,
@@ -23,8 +23,8 @@
   },
   {
     "id": "B1",
-    "name": "Blackfriars Pi 1",
-    "description": "No description available.",
+    "name": "Blackfriars Pi 1",	
+    "description": "Solely for students",
     "imageName": "image3",
     "rating": 3.5,
     "lat": -33.885639,
@@ -35,7 +35,7 @@
   {
     "id": "W1",
     "name": "Wattle Street 1",
-    "description": "No description available.",
+    "description": "Only two, sometimes depends on the lucky",
     "imageName": "image2",
     "rating": 4.2,
     "lat": -33.882083,
@@ -46,7 +46,7 @@
   {
     "id": "T2",
     "name": "Thomas Street 2",
-    "description": "No description available.",
+    "description": "Evening only",
     "imageName": "image1",
     "rating": 4.0,
     "lat": -33.883278,
@@ -57,7 +57,7 @@
   {
     "id": "M2",
     "name": "Mary Ann Street 2",
-    "description": "No description available.",
+    "description": "You can always find a spot",
     "imageName": "image2",
     "rating": 3.8,
     "lat": -33.881139,
