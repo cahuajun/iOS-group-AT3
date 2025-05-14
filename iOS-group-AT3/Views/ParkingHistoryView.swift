@@ -57,20 +57,23 @@ struct ParkingHistoryView: View {
         }
     }
 
+//    func loadJSONData() {
+//        guard let url = Bundle.main.url(forResource: "parking_history", withExtension: "json") else {
+//            print("❌ parking_history.json not found")
+//            return
+//        }
+//
+//        do {
+//            let data = try Data(contentsOf: url)
+//            let decoder = JSONDecoder()
+//            decoder.dateDecodingStrategy = .iso8601
+//            self.records = try decoder.decode([ParkingSpot].self, from: data)
+//        } catch {
+//            print("❌ Failed to decode parking_history.json: \(error)")
+//        }
+//    }
     func loadJSONData() {
-        guard let url = Bundle.main.url(forResource: "parking_history", withExtension: "json") else {
-            print("❌ parking_history.json not found")
-            return
-        }
-
-        do {
-            let data = try Data(contentsOf: url)
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .iso8601
-            self.records = try decoder.decode([ParkingSpot].self, from: data)
-        } catch {
-            print("❌ Failed to decode parking_history.json: \(error)")
-        }
+        records = Utility.loadParkingSpots()
     }
 }
 

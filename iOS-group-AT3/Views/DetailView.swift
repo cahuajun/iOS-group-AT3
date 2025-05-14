@@ -25,26 +25,7 @@ struct DetailView: View {
     ///
     /// Can read comments from comments.json file, also filter comments for the current parking spot.
     private func loadComments() {
-        if let url = Bundle.main.url(forResource: "comments", withExtension: "json") {
-            do {
-                let data = try Data(contentsOf: url)
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .iso8601
-                let commentsDict = try decoder.decode([String: [Comment]].self, from: data)
-                previewComments = commentsDict[parkingSpot.id] ?? []
-            } catch {
-                print("Error loading comments: \(error)")
-            }
-        }
-    }
-    
-    /// Calculates the average rating from all comments.
-    ///
-    /// - Returns: The average rating as a Double, or 0 if there are no comments
-    private func calculateAverageRating() -> Double {
-        guard !previewComments.isEmpty else { return 0 }
-        let totalRating = previewComments.reduce(0) { $0 + $1.rating }
-        return Double(totalRating) / Double(previewComments.count)
+        previewComments = Utility.loadComments(for: parkingSpot.id)
     }
     
     var body: some View {
@@ -79,7 +60,7 @@ struct DetailView: View {
                             HStack {
                                 Image(systemName: "star.fill")
                                     .foregroundColor(.yellow)
-                                Text(String(format: "%.1f", calculateAverageRating()))
+                                Text(String(format: "%.1f", Utility.calculateAverageRating(for: previewComments)))
                             }
                         }
                         .padding(.horizontal)

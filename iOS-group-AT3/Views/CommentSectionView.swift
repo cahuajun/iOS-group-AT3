@@ -18,9 +18,12 @@ struct CommentSectionView: View {
     @State private var showImagePicker = false
     @Environment(\.dismiss) var dismiss
     
+//    var averageRating: Double {
+//        let total = comments.reduce(0) { $0 + $1.rating }
+//        return comments.isEmpty ? 0.0 : Double(total) / Double(comments.count)
+//    }
     var averageRating: Double {
-        let total = comments.reduce(0) { $0 + $1.rating }
-        return comments.isEmpty ? 0.0 : Double(total) / Double(comments.count)
+        return Utility.calculateAverageRating(for: comments)
     }
     
     var body: some View {
@@ -133,24 +136,26 @@ struct CommentSectionView: View {
     }
     
     // MARK: - Load comments from JSON
-    func loadComments(for spotID: String) {
-        guard let url = Bundle.main.url(forResource: "comments", withExtension: "json"),
-              let data = try? Data(contentsOf: url) else {
-            print("comments.json not found")
-            return
-        }
-        
-        do {
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .iso8601
-                let decoded = try decoder.decode([String: [Comment]].self, from: data)
-                comments = decoded[spotID] ?? []
-                print("Loaded \(comments.count) comment(s) for: \(spotID)")
-            } catch {
-                print("Failed to decode comments.json: \(error)")
-        }
+//    func loadComments(for spotID: String) {
+//        guard let url = Bundle.main.url(forResource: "comments", withExtension: "json"),
+//              let data = try? Data(contentsOf: url) else {
+//            print("comments.json not found")
+//            return
+//        }
+//        
+//        do {
+//                let decoder = JSONDecoder()
+//                decoder.dateDecodingStrategy = .iso8601
+//                let decoded = try decoder.decode([String: [Comment]].self, from: data)
+//                comments = decoded[spotID] ?? []
+//                print("Loaded \(comments.count) comment(s) for: \(spotID)")
+//            } catch {
+//                print("Failed to decode comments.json: \(error)")
+//        }
+//    }
+    func loadComments (for spotID: String){
+        comments = Utility.loadComments(for: spotID)
     }
-    
     // MARK: - Comment card
     struct CommentCard: View {
         let comment: Comment
