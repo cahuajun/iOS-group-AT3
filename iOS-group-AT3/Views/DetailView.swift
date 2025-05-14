@@ -68,13 +68,13 @@ struct DetailView: View {
                         // Park Here button
                         Button(action: {
                             isParked.toggle()
-                            if isParked {
-                                Utility.addCount(for: parkingSpot.id)
-//                                let updatedSpots = Utility.loadParkingSpots()
-//                                if let spot = updatedSpots.first(where: {$0.id == ParkingSpot.id}) {
-//                                    print ("updated ocunt : \(spot.count)")
-//                                }
-                            }
+//                            if isParked {
+//                                Utility.addCount(for: parkingSpot.id)
+////                                let updatedSpots = Utility.loadParkingSpots()
+////                                if let spot = updatedSpots.first(where: {$0.id == ParkingSpot.id}) {
+////                                    print ("updated ocunt : \(spot.count)")
+////                                }
+//                            }
                         }) {
                             HStack {
                                 Image(systemName: isParked ? "checkmark.circle.fill" : "car.fill")

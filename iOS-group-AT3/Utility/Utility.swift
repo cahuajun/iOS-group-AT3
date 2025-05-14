@@ -102,30 +102,30 @@ class Utility {
         return Double(totalRating) / Double(comments.count)
     }
     
-    static func addCount (for spotID: String) {
-        var parkingSpots = loadParkingSpots()
-        if let index = parkingSpots.firstIndex(where: {$0.id == spotID }) {
-            parkingSpots[index].count += 1
-            
-            DispatchQueue.global(qos: .background).async {
-                do{
-                    let encoder = JSONEncoder()
-                    encoder.outputFormatting = .prettyPrinted
-                    _ = ISO8601DateFormatter()
-                    encoder.dateEncodingStrategy = .custom{ date, encoder in
-                        var container = encoder.singleValueContainer()
-                        try container.encode(parkingSpots)
-                    }
-                    
-                    let updatedDate = try encoder.encode(parkingSpots)
-                    let fileURL = getDocumentsDirectory().appendingPathComponent("parking_history.json")
-                    
-                    try updatedDate.write(to: fileURL)
-                    print("success")
-                } catch {
-                    print("Failed to write data into json file")
-                }
-            }
-        }
-    }
+//    static func addCount (for spotID: String) {
+//        var parkingSpots = loadParkingSpots()
+//        if let index = parkingSpots.firstIndex(where: {$0.id == spotID }) {
+//            parkingSpots[index].count += 1
+//            
+//            DispatchQueue.global(qos: .background).async {
+//                do{
+//                    let encoder = JSONEncoder()
+//                    encoder.outputFormatting = .prettyPrinted
+//                    _ = ISO8601DateFormatter()
+//                    encoder.dateEncodingStrategy = .custom{ date, encoder in
+//                        var container = encoder.singleValueContainer()
+//                        try container.encode(parkingSpots)
+//                    }
+//                    
+//                    let updatedDate = try encoder.encode(parkingSpots)
+//                    let fileURL = getDocumentsDirectory().appendingPathComponent("parking_history.json")
+//                    
+//                    try updatedDate.write(to: fileURL)
+//                    print("success")
+//                } catch {
+//                    print("Failed to write data into json file")
+//                }
+//            }
+//        }
+//    }
 }
