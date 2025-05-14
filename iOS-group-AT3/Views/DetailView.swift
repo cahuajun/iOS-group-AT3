@@ -68,11 +68,13 @@ struct DetailView: View {
                         // Park Here button
                         Button(action: {
                             isParked.toggle()
-                            // TODO: Update count in parking_history.json
-                            // 1. Read current JSON
-                            // 2. Find spot by id
-                            // 3. Increment count
-                            // 4. Save back to JSON
+                            if isParked {
+                                Utility.addCount(for: parkingSpot.id)
+//                                let updatedSpots = Utility.loadParkingSpots()
+//                                if let spot = updatedSpots.first(where: {$0.id == ParkingSpot.id}) {
+//                                    print ("updated ocunt : \(spot.count)")
+//                                }
+                            }
                         }) {
                             HStack {
                                 Image(systemName: isParked ? "checkmark.circle.fill" : "car.fill")

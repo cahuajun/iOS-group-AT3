@@ -16,7 +16,7 @@ struct ParkingSpot: Identifiable, Codable, Hashable {
     let rating: Double
     let lat: Double
     let long: Double
-    let count: Int
+    var count: Int
     let date: Date
     var comments: [Comment]
 }
