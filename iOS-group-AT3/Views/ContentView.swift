@@ -11,7 +11,7 @@ import MapKit
 struct ContentView: View {
     @State private var isActive = false
     @State private var selectedLocation = CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275)
-    @State private var startPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: -33.882889, longitude: 151.199611), span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)))
+    @State private var startPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: -33.882889, longitude: 151.199611), span: MKCoordinateSpan(latitudeDelta: 0.008, longitudeDelta: 0.008)))
     
     @State private var selection: ParkingSpot? = nil
     @State var allSpots: [ParkingSpot]

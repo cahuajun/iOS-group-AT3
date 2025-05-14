@@ -4,10 +4,14 @@
 //
 //  Created by 王嘉瑶 on 9/5/2025.
 //
- 
+
 import SwiftUI
 import MapKit
- 
+
+/// A view that displays detailed information about a parking spot.
+///
+/// This view shows the parking spot's image, name, description, and comments.
+/// It also provides functionality to mark a spot as parked and view more comments.
 struct DetailView: View {
     let parkingSpot: ParkingSpot
     
@@ -15,21 +19,47 @@ struct DetailView: View {
     @State private var dragOffset: CGFloat = 0
     @State private var showComments = false
     @State private var isParked = false
+    @State private var previewComments: [Comment] = []
     
-    // Calculate average rating from comments， maybe can add func to parkingSPot file to avoid DRY
-    private var averageRating: Double {
-        let total = parkingSpot.comments.reduce(0) { $0 + $1.rating }
-        return parkingSpot.comments.isEmpty ? 0.0 : Double(total) / Double(parkingSpot.comments.count)
+    /// Loads comments for the current parking spot from comments.json.
+    ///
+    /// Can read comments from comments.json file, also filter comments for the current parking spot.
+    private func loadComments() {
+        if let url = Bundle.main.url(forResource: "comments", withExtension: "json") {
+            do {
+                let data = try Data(contentsOf: url)
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .iso8601
+                let commentsDict = try decoder.decode([String: [Comment]].self, from: data)
+                previewComments = commentsDict[parkingSpot.id] ?? []
+            } catch {
+                print("Error loading comments: \(error)")
+            }
+        }
+    }
+    
+    /// Calculates the average rating from all comments.
+    ///
+    /// - Returns: The average rating as a Double, or 0 if there are no comments
+    private func calculateAverageRating() -> Double {
+        guard !previewComments.isEmpty else { return 0 }
+        let totalRating = previewComments.reduce(0) { $0 + $1.rating }
+        return Double(totalRating) / Double(previewComments.count)
     }
     
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                // Top drag bar
+                // Top drag bar for expanding/collapsing the view
                 RoundedRectangle(cornerRadius: 2.5)
                     .fill(Color.gray.opacity(0.5))
                     .frame(width: 40, height: 5)
                     .padding(.top, 8)
+                    .onTapGesture {
+                        withAnimation(.spring()) {
+                            isExpanded.toggle()
+                        }
+                    }
                 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 16) {
@@ -40,7 +70,7 @@ struct DetailView: View {
                             .frame(height: 200)
                             .clipped()
                         
-                        // Name and rating
+                        // Name and rating section
                         HStack {
                             Text(parkingSpot.name)
                                 .font(.title)
@@ -49,7 +79,7 @@ struct DetailView: View {
                             HStack {
                                 Image(systemName: "star.fill")
                                     .foregroundColor(.yellow)
-                                Text(String(format: "%.1f", averageRating))
+                                Text(String(format: "%.1f", calculateAverageRating()))
                             }
                         }
                         .padding(.horizontal)
@@ -94,28 +124,9 @@ struct DetailView: View {
                             }
                             .padding(.horizontal)
                             
-                            if !parkingSpot.comments.isEmpty {
-                                ForEach(parkingSpot.comments.prefix(2)) { comment in
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        HStack {
-                                            Text(comment.author)
-                                                .font(.subheadline)
-                                                .bold()
-                                            Spacer()
-                                            HStack(spacing: 2) {
-                                                ForEach(1...5, id: \.self) { i in
-                                                    Image(systemName: i <= comment.rating ? "star.fill" : "star")
-                                                        .foregroundColor(.yellow)
-                                                        .font(.caption)
-                                                }
-                                            }
-                                        }
-                                        Text(comment.text)
-                                            .font(.subheadline)
-                                            .lineLimit(2)
-                                    }
-                                    .padding(.horizontal)
-                                    .padding(.vertical, 4)
+                            if !previewComments.isEmpty {
+                                ForEach(previewComments) { comment in
+                                    CommentRow(comment: comment)
                                 }
                             } else {
                                 Text("No comments yet")
@@ -152,47 +163,54 @@ struct DetailView: View {
                 CommentSectionView(parkingSpotID: parkingSpot.id)
             }
         }
+        .onAppear {
+            loadComments()
+        }
     }
 }
 
-/*
- Notes for ContentView:
+/// A view that displays a single comment in the detail view.
+///
+/// This view shows the comment's author, rating, text content, and timestamp.
+struct CommentRow: View {
+    let comment: Comment
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text(comment.author)
+                    .font(.headline)
+                Spacer()
+                HStack {
+                    Image(systemName: "star.fill")
+                        .foregroundColor(.yellow)
+                    Text(String(format: "%.1f", Double(comment.rating)))
+                }
+            }
+            
+            Text(comment.text)
+                .foregroundColor(.gray)
+            
+            Text(comment.timestamp, style: .date)
+                .font(.caption)
+                .foregroundColor(.gray)
+        }
+        .padding()
+        .background(Color(.systemGray6))
+        .cornerRadius(8)
+        .padding(.horizontal)
+    }
+}
 
-    - Data Loading
-        - Load parking_history.json
-        - Parse to [ParkingSpot] array
-        - Get comments from comments.json
-        - Merge comments with spots
-
-    - Map View
-        - Show pins for each spot
-        - When pin tapped, show this DetailView
-        - Use sheet with .medium detent
-
-    - Files Needed
-        - parking_history.json (spot info)
-        - comments.json (comments)
-
-    - ParkingSpot Struct
-        - id, name, description
-        - imageName for spot image
-        - lat, long for map
-        - comments array
-
-    - Next Steps
-        - Load JSON in ContentView
-        - Connect map pins to DetailView
-        - Test data flow
- */
 #Preview {
     DetailView(parkingSpot: ParkingSpot(
         id: "T1",
         name: "Thomas Street 1",
-        description: "No description available.",
+        description: "Two-storey parking lo",
         imageName: "image1",
         rating: 4.5,
-        lat: -33.882889,
-        long: 151.199611,
+        lat: -33.8833,
+        long: 151.1996,
         count: 0,
         date: Date(),
         comments: []
