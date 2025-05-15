@@ -2,7 +2,7 @@
 //  DetailView.swift
 //  iOS-group-AT3
 //
-//  Created by 王嘉瑶 on 9/5/2025.
+//  Created by JW on 9/5/2025.
 //
 
 import SwiftUI
@@ -65,16 +65,9 @@ struct DetailView: View {
                         }
                         .padding(.horizontal)
                         
-                        // Park Here button
+                        // Park Here button, can add other func in future dev
                         Button(action: {
                             isParked.toggle()
-//                            if isParked {
-//                                Utility.addCount(for: parkingSpot.id)
-////                                let updatedSpots = Utility.loadParkingSpots()
-////                                if let spot = updatedSpots.first(where: {$0.id == ParkingSpot.id}) {
-////                                    print ("updated ocunt : \(spot.count)")
-////                                }
-//                            }
                         }) {
                             HStack {
                                 Image(systemName: isParked ? "checkmark.circle.fill" : "car.fill")
@@ -154,6 +147,7 @@ struct DetailView: View {
 
 /// A view that displays a single comment in the detail view.
 ///
+/// Add new one not from commentSectionView for a different layout
 /// This view shows the comment's author, rating, text content, and timestamp.
 struct CommentRow: View {
     let comment: Comment
